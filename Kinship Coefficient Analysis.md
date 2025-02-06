@@ -14,7 +14,7 @@ samtools 1.3.1
 PLINK v2.00a5.12LM 64-bit Intel (25 Jun 2024)
 ```
 ### steps
-####1.1 Create a script to make script that can transfer .bam to .vcf.
+#### 1.1 Create a script to make script that can transfer .bam to .vcf.
 ```
 #!/bin/bash
 
@@ -29,7 +29,7 @@ while read -r i; do
     echo "tabix -p vcf Wang_${i}.vcf.gz" >> 01.1.Wang.getVCF.sh
 done < bam_index.txt
 ```
-####1.2 Transfer .bam to indexed .vcf.gz file.
+#### 1.2 Transfer .bam to indexed .vcf.gz file.
 ```
 #!/bin/bash
 
@@ -46,15 +46,15 @@ samtools mpileup -ugf GRCh38.d1.vd1.fa -l SNP_GRCh38_hg38_wChr.bed Wang_1.sort.M
 bgzip -c Wang_1.vcf > Wang_1.vcf.gz
 tabix -p vcf Wang_1.vcf.gz
 ```
-####2. Merge all the .vcf files with bcftools merge.
+#### 2. Merge all the .vcf files with bcftools merge.
 ```
 bcftools merge Wang_1.vcf.gz Wang_2.vcf.gz Wang_3.vcf.gz Wang_4.vcf.gz Wang_5.vcf.gz Wang_6.vcf.gz -o merged.vcf.gz -Oz
 ```
-####3. Transfer merged .vcf file into plink2 --bpgen file format. Only use autosomes.
+#### 3. Transfer merged .vcf file into plink2 --bpgen file format. Only use autosomes.
 ```
 plink2 --vcf merged.vcf.gz --make-bpgen --out Wang --allow-extra-chr --chr 1-22 --max-alleles 2
 ```
-####4. Caculate kinship coefficient value with plink2.
+#### 4. Caculate kinship coefficient value with plink2.
 ```
 plink2 --bpfile Wang --maf 0.05 --make-king-table --out Kinship
 ```
