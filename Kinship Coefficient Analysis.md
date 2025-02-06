@@ -12,7 +12,7 @@ Calculate Kinship Coefficient value to check kinship between samples.
 bcftools 1.21
 samtools 1.3.1
 PLINK v2.00a5.12LM 64-bit Intel (25 Jun 2024)
-“`
+```
 ### steps
 ####1.1 Create a script to make script that can transfer .bam to .vcf.
 ```
