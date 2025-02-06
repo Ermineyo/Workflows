@@ -3,8 +3,8 @@
 ## Goal
 Calculate Kinship Coefficient value to check kinship between samples.
 
-### Input:Bam
-### Output:Kinship Coefficient Matrix
+### Input:`Bam`
+### Output:`Kinship Coefficient Matrix`
 ### softwares
 ```
 bcftools 1.21
