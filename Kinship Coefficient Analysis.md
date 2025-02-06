@@ -3,6 +3,7 @@
 ## Goal
 Calculate Kinship Coefficient value to check kinship between samples.
 
+## Code
 ### Input
 `Bam`
 ### Output
