@@ -20,3 +20,6 @@ awk -F'\t' '{
     }
 }' OFS='\t' "$input_vcf"
 ```
+
+#### 3.soft link
+`ln -s /home/ybwang/myfolder/2024Dec.HFS/GATK/out.GRCh38.3/HFS.WES.chr1.vcf.gz ./HFS.WES.chr1.vcf.gz`
