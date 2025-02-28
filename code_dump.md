@@ -23,3 +23,38 @@ awk -F'\t' '{
 
 #### 3.soft link
 `ln -s /home/ybwang/myfolder/2024Dec.HFS/GATK/out.GRCh38.3/HFS.WES.chr1.vcf.gz ./HFS.WES.chr1.vcf.gz`
+
+### 4. combine 2 vcf : add annotation from vcf A to vcf B
+```
+path="reference"
+china="${path}/Song_China_map.sorted.filtered.vcf.gz"
+common="${path}/Song_hg38_All_SNP.sorted.filtered.vcf.gz"
+genomeAD="${path}/Song_hg38_gnomAD.sorted.filtered.vcf.gz"
+
+outpath="output"
+input="wang3_wang4.var.merged.txt"
+
+echo -e "##fileformat=VCFv4.2\n#CHROM\tPOS\tID\tREF\tALT\tQUAL\tFILTER\tINFO" > wang3_wang4.var.merged.vcf
+awk -F':' '{print $1 "\t" $2 "\t.\t" $3 "\t" $4 "\t.\t.\t."}' ${input} >> wang3_wang4.var.merged.vcf
+
+bgzip wang3_wang4.var.merged.vcf
+tabix -p vcf wang3_wang4.var.merged.vcf.gz
+
+bcftools annotate -a ${china} -c CHINA_ID -o temp1.vcf wang3_wang4.var.merged.vcf.gz
+bgzip -f temp1.vcf
+tabix -p vcf temp1.vcf.gz
+
+bcftools annotate -a ${common} -c +INFO -o temp2.vcf temp1.vcf.gz
+bgzip -f temp2.vcf
+tabix -p vcf temp2.vcf.gz
+
+bcftools annotate -a ${genomeAD} -c +INFO -o final_merged.vcf temp2.vcf.gz
+bgzip -f final_merged.vcf
+tabix -p vcf final_merged.vcf.gz
+
+rm temp1.vcf.gz temp1.vcf.gz.tbi temp2.vcf.gz temp2.vcf.gz.tbi
+```
+
+
+
+
