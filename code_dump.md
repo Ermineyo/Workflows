@@ -24,7 +24,7 @@ awk -F'\t' '{
 #### 3.soft link
 `ln -s /home/ybwang/myfolder/2024Dec.HFS/GATK/out.GRCh38.3/HFS.WES.chr1.vcf.gz ./HFS.WES.chr1.vcf.gz`
 
-### 4. combine 2 vcf : add annotation from vcf A to vcf B
+#### 4. combine 2 vcf : add annotation from vcf A to vcf B
 ```
 path="reference"
 china="${path}/Song_China_map.sorted.filtered.vcf.gz"
