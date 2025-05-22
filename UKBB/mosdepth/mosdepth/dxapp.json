@@ -1,0 +1,211 @@
+{
+  "name": "mosdepth",
+  "title": "Mosdepth on UKB, created by Zhanye.",
+  "summary": "Mosdepth on UKB. Created from https://github.com/brentp/mosdepth/releases.",
+  "dxapi": "1.0.0",
+  "version": "0.0.1",
+  "inputSpec": [
+    {
+      "name": "mosdepth_binary",
+      "label": "Mosdepth binary executable",
+      "class": "file",
+      "optional": false,
+      "patterns": ["*"],
+      "help": "Upload your mosdepth executable here (precompiled for Linux)"
+    },
+    {
+      "name": "Bam_or_Cram_file",
+      "label": "Bam/Cram file for mosdepth.",
+      "class": "file",
+      "optional": false,
+      "patterns": ["*"]
+    },
+    {
+      "name": "cram_index",
+      "label": "Index (.crai) for the CRAM file",
+      "class": "file",
+      "optional": true,
+      "patterns": ["*.crai"]
+    },
+    {
+      "name": "fasta_index",
+      "label": "FASTA index (.fai)",
+      "class": "file",
+      "optional": true,
+      "patterns": ["*.fai"]
+    },
+    {
+      "name": "Output_prefix",
+      "label": "The prefix of output files.",
+      "class": "string",
+      "optional": false
+    },
+    {
+      "name": "threads",
+      "label": "Number of threads",
+      "class": "int",
+      "optional": true
+    },
+    {
+      "name": "chrom",
+      "label": "Restrict to chromosome",
+      "class": "string",
+      "optional": true
+    },
+    {
+      "name": "by",
+      "label": "BED file or integer window size",
+      "class": "string",
+      "optional": true
+    },
+    {
+      "name": "no_per_base",
+      "label": "Disable per-base depth output",
+      "class": "boolean",
+      "optional": true
+    },
+    {
+      "name": "fasta",
+      "label": "Reference FASTA (required for CRAM)",
+      "class": "file",
+      "optional": true,
+      "patterns": ["*.fa", "*.fasta"]
+    },
+    {
+      "name": "flag",
+      "label": "Exclude reads with flag bits",
+      "class": "int",
+      "optional": true
+    },
+    {
+      "name": "include_flag",
+      "label": "Include reads with flag bits",
+      "class": "int",
+      "optional": true
+    },
+    {
+      "name": "fast_mode",
+      "label": "Enable fast mode (recommended)",
+      "class": "boolean",
+      "optional": true
+    },
+    {
+      "name": "fragment_mode",
+      "label": "Enable fragment (insert) mode",
+      "class": "boolean",
+      "optional": true
+    },
+    {
+      "name": "quantize",
+      "label": "Quantize segments (comma-separated)",
+      "class": "string",
+      "optional": true
+    },
+    {
+      "name": "mapq",
+      "label": "Minimum mapping quality",
+      "class": "int",
+      "optional": true
+    },
+    {
+      "name": "min_frag_len",
+      "label": "Minimum fragment length",
+      "class": "int",
+      "optional": true
+    },
+    {
+      "name": "max_frag_len",
+      "label": "Maximum fragment length",
+      "class": "int",
+      "optional": true
+    },
+    {
+      "name": "thresholds",
+      "label": "Threshold values (comma-separated)",
+      "class": "string",
+      "optional": true
+    },
+    {
+      "name": "use_median",
+      "label": "Use median instead of mean (in --by)",
+      "class": "boolean",
+      "optional": true
+    },
+    {
+      "name": "read_groups",
+      "label": "Comma-separated read group IDs",
+      "class": "string",
+      "optional": true
+    }
+  ],
+  "outputSpec": [
+    {
+      "name": "out_mosdepth_summary_txt",
+      "label": "out.mosdepth.summary.txt",
+      "class": "file",
+      "patterns": ["*"]
+    },
+    {
+      "name": "out_mosdepth_global_dist_txt",
+      "label": "out.mosdepth.global.dist.txt",
+      "class": "file",
+      "patterns": ["*"]
+    },
+    {
+      "name": "out_per_base_bed_gz",
+      "label": "out.per-base.bed.gz",
+      "class": "file",
+      "optional": true,
+      "patterns": ["*"]
+    },
+    {
+      "name": "out_per_base_bed_gz_csi",
+      "label": "out.per-base.bed.gz.csi",
+      "class": "file",
+      "optional": true,
+      "patterns": ["*"]
+    },
+    {
+      "name": "out_regions_bed_gz",
+      "label": "out.regions.bed.gz",
+      "class": "file",
+      "optional": true,
+      "patterns": ["*"]
+    },
+    {
+      "name": "out_quantized_bed_gz",
+      "label": "out.quantized.bed.gz",
+      "class": "file",
+      "optional": true,
+      "patterns": ["*"]
+    },
+    {
+      "name": "out_thresholds_bed_gz",
+      "label": "out.thresholds.bed.gz",
+      "class": "file",
+      "optional": true,
+      "patterns": ["*"]
+    }
+  ],
+  "runSpec": {
+    "timeoutPolicy": {
+      "*": {
+        "hours": 48
+      }
+    },
+    "interpreter": "bash",
+    "file": "src/mosdepth.sh",
+    "distribution": "Ubuntu",
+    "release": "20.04",
+    "version": "0"
+  },
+  "regionalOptions": {
+    "aws:eu-west-2": {
+      "systemRequirements": {
+        "*": {
+          "instanceType": "mem1_ssd1_v2_x4"
+        }
+      }
+    }
+  }
+}
