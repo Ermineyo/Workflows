@@ -4,10 +4,10 @@
 3. In another terminal:
    ```
    file_list="dna_bam_list.txt"
-
+   
     while read file; do
       if [[ -f "$file" ]]; then
-        rsync -av --progress -e "ssh -S ~/.ssh/cm-zhanyezhang@hpc3.ust.hk:22" "$file" zhanyezhang@hpc3.ust.hk:/scratch/PI/jgwang/zhanye/projects/2025May.HLA_longitudinal/HM_LOH/bam/raw/
+        rsync -av --progress -e "ssh -S ~/.ssh/cm-zhanyezhang@hpc3.ust.hk:22" "$file" zhanyezhang@hpc3.ust.hk:/scratch/PI/jgwang/zhanye/projects/xxx/xxx/bam/
       else
         echo "File not found: $file"
       fi
