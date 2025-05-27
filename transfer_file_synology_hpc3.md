@@ -7,7 +7,7 @@
    
     while read file; do
       if [[ -f "$file" ]]; then
-        rsync -av --progress -e "ssh -S ~/.ssh/cm-zhanyezhang@hpc3.ust.hk:22" "$file" zhanyezhang@hpc3.ust.hk:/scratch/PI/jgwang/zhanye/projects/xxx/xxx/bam/
+        rsync -avL --progress -e "ssh -S ~/.ssh/cm-zhanyezhang@hpc3.ust.hk:22" "$file" zhanyezhang@hpc3.ust.hk:/scratch/PI/jgwang/zhanye/projects/xxx/xxx/bam/
       else
         echo "File not found: $file"
       fi
