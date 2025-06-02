@@ -77,4 +77,6 @@
                   file = output_file,
                   sep = "\t", quote = FALSE, row.names = TRUE, col.names = NA)
     }
+    count2logTPM(sample_list = readLines('sample_list.txt'),input_path = './count',output_file = 'CIBERSORTx_input_TPM.txt')
    ```
+   3. Upload file to [CIBERSORT website](https://cibersortx.stanford.edu/) to get the result.
