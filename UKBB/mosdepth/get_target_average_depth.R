@@ -40,10 +40,9 @@ for (sampleid in sampleid_list) {
     write.table(mergeDat, file = outfile, col.names = TRUE, row.names = FALSE, sep = "\t", quote = FALSE)
   } else {
     cat(paste(querybed_file, " file size zero\n"))
+  }
+}
 
 # zip之后下载
 tarfile <- "target_average_depth.tar.gz"
 tar(tarfile, files = "target_average_depth", compression = "gzip")
-    
-  }
-}
