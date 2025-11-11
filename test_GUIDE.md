@@ -15,7 +15,7 @@
      wanglabhkust/guide:v0.1 \
      /home/guide/data \
      simple \
-     1
+     1 ```
 6. Docker默认的Memory可能不够，需要设置。
    遇到的error:
    ```bash
@@ -254,3 +254,4 @@ Traceback (most recent call last):
 MemoryError
 Error: preprocess_wsi_multi_process.py failed!
 
+```
