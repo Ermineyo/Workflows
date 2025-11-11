@@ -252,4 +252,5 @@ Traceback (most recent call last):
   File "/opt/conda/lib/python3.8/multiprocessing/pool.py", line 771, in get
     raise self._value
 MemoryError
-Error: preprocess_wsi_multi_process.py failed!```
+Error: preprocess_wsi_multi_process.py failed!
+```
