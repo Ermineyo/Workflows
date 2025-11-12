@@ -1,7 +1,7 @@
-## GUIDE Test Report – Zhanye Zhang
+[guide_results_simple.csv](https://github.com/user-attachments/files/23491705/guide_results_simple.csv)## GUIDE Test Report – Zhanye Zhang
 
 ## Suggestions
-1. 个人感觉，Docker 的语法比 Python 和 R 更复杂，坑也很多（如环境挂载、路径映射、root 权限问题等）。因此我个人建议采用 **在线分析网页 + Python 包** 的形式会更好，既方便使用又易于维护。  
+1. 个人感觉，Docker 的语法比 Python 和 R 更复杂，坑也很多（如环境挂载、路径映射、root 权限问题等）。建议最终发布版本加入python包，方便用户个性化修改使用。  
 2. 在 input data 需要放到固定名字的文件夹下（`omics`），不够灵活，建议修改为可以输入任意文件路径。  
 3. 在 `docker run` 的参数中，用 1 表示 CPU、用 0 表示 GPU，指代不够直观，建议改成直接使用 `cpu` / `gpu`。  
 4. 遇到问题，直接复制教程代码无法运行，建议把参数说明写到代码块外。  
@@ -16,7 +16,7 @@
      /home/guide/data \
      simple \
      1 ```
-6. 如果系统内存不够，会报错。
+6. 如果WSI patch 提取的步骤系统内存不够，会报错。
    遇到的error:
    ```bash
    (base) ➜  test_GUIDE docker run --shm-size 12G \
@@ -253,7 +253,9 @@
    MemoryError
    Error: preprocess_wsi_multi_process.py failed!
    ```
-7. Docker defau
+7. 如果open wsi的步骤内存不够，不会报错，但会卡死在```Opening image  2025-11-11 15:27:30.342442 ```，解决办法：修改docker memory limit(default=7.68G)。参考：一张片子（CGGA_P87.svs，～1G）,需要的内存峰值大概在33G左右。
+   <img width="1280" height="726" alt="d62980f3ad846589183d6f98934da145_720" src="https://github.com/user-attachments/assets/29cf88ce-f053-4197-af9f-8540af4c31f8" />
+
 8. 如果多次运行docker，但因为IO问题卡死，control C退出后docker不会退出，导致后台一直挂起占用资源
    ```
    (base) ➜  test_GUIDE docker ps -a
@@ -268,6 +270,7 @@
 
 ### Supplementary Information
 ### Information of my MacOS desktop
+### File Path
 .
 ├── omics
 │   ├── gene.csv
@@ -275,14 +278,24 @@
 │   └── protein.csv
 └── wsi
     └── CGGA_P87.svs
+### 运行结果
+#### only omics
+##### 运行时间约5分钟以内，memory峰值不高，cpu峰值～1000%
+##### result
+[Uploading guide_results_simple,P_IDHm_IME,used_omics,IME_positive
+CGGA_2103,0.3797247412158661,"gene,methylation,protein",False
+CGGA_P109,0.44775566332631217,"gene,protein",False
+CGGA_P137,0.2461266163551281,gene,False
+CGGA_P151,0.40986750274123335,gene,False
+CGGA_P153,0.5767333226224423,gene,True
+CGGA_P83,0.21392474465012454,protein,False
+CGGA_P84,0.24578361694146358,"methylation,protein",False
+CGGA_P87,0.3253561172269238,"methylation,protein",False
+.csv…]()
+
+#### 一张片子(~1G)+omics
+##### 运行时间约，memory峰值～32G，cpu峰值～1000%
 
 
-RAM:
-Before: 
-Running: 24.1G/48G
-
-Slow step: Opening image  2025-11-11 14:59:38.474133
-PID    COMMAND      %CPU TIME     #TH    #WQ  #PORTS MEM    PURG   CMPRS  PGRP  PPID  STATE    BOOSTS               %CPU_ME %CPU_OTHRS UID  FAULTS     COW       MSGSENT    MSGRECV     SYSBSD      SYSMACH
-0      kernel_task  14.5 84:00:01 260/8  0    0      103M+  0B     0B     0     0     running   0[0]                0.00000 0.00000    0    117597     10660     2147483647 2147483647  0           0
 
 
