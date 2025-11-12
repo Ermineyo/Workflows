@@ -273,6 +273,7 @@
 <img width="560" height="1030" alt="image" src="https://github.com/user-attachments/assets/12276229-2425-4a31-8cc0-cd1ac6c66cbf" />
 
 ### File Path
+```
 .
 ├── omics/
 │   ├── gene.csv
@@ -280,9 +281,10 @@
 │   └── protein.csv
 └── wsi/
     └── CGGA_P87.svs
+```
 
 ### 运行结果
-#### only omics
+#### 1. only omics
 ##### 运行时间约5分钟以内，memory峰值不高，cpu峰值～1000%
 ##### result
 | Sample ID | IME Score | Used Omics                 | IME Positive |
@@ -297,7 +299,7 @@
 | CGGA_P87  | 0.3254    | methylation, protein       | False        |
 
 
-#### 一张片子(~1G)+omics
+#### 2. 一张片子(~1G)+omics
 ##### 运行时间约40分钟，memory峰值～32G，cpu峰值～1000%
 ##### code
 ```bash
