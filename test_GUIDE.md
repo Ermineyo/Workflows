@@ -16,7 +16,7 @@
      /home/guide/data \
      simple \
      1 ```
-6. Docker默认的Memory可能不够，需要设置。
+6. 如果系统内存不够，会报错。
    遇到的error:
    ```bash
    (base) ➜  test_GUIDE docker run --shm-size 12G \
@@ -254,12 +254,39 @@
    MemoryError
    Error: preprocess_wsi_multi_process.py failed!
    ```
-解决办法：
+7. 会卡死在第二个Opening image这一步。在MacOS desktop上，这一步卡了20分钟没有动。
+   ```bash
+   Downsampling with factor  0
+   Given magnification 20.0, best level=0, best mag=40.0
+   Opening image  2025-11-11 14:59:38.144386
+   Downsampling with factor  1
+   Given magnification 20.0, best level=1, best mag=20.0
+   Opening image  2025-11-11 14:59:38.474133
+   ```
 
 
 
 ### Supplementary Information
-### Information of my MacOS
+### Information of my MacOS desktop
+.
+├── omics
+│   ├── gene.csv
+│   ├── methyl.csv
+│   └── protein.csv
+└── wsi
+    ├── CGGA_2103.svs
+    └── CGGA_P87.svs
+
+
+RAM:
+Before: 
+Running: 24.1G/48G
+
+Slow step: Opening image  2025-11-11 14:59:38.474133
+PID    COMMAND      %CPU TIME     #TH    #WQ  #PORTS MEM    PURG   CMPRS  PGRP  PPID  STATE    BOOSTS               %CPU_ME %CPU_OTHRS UID  FAULTS     COW       MSGSENT    MSGRECV     SYSBSD      SYSMACH
+0      kernel_task  14.5 84:00:01 260/8  0    0      103M+  0B     0B     0     0     running   0[0]                0.00000 0.00000    0    117597     10660     2147483647 2147483647  0           0
+
+### Information of my MacOS laptop，因为内存不够无法正常运行
 | 项目 | 内容 |
 |------|------|
 | **DOCKER 版本** | 24.0.6 |
