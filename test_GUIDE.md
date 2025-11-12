@@ -256,7 +256,7 @@
 7. 如果open wsi的步骤内存不够，不会报错，但会卡死在```Opening image  2025-11-11 15:27:30.342442 ```，解决办法：修改docker memory limit(default=7.68G)。参考：一张片子（CGGA_P87.svs，～1G）,需要的内存峰值大概在33G左右。
    <img width="1280" height="726" alt="d62980f3ad846589183d6f98934da145_720" src="https://github.com/user-attachments/assets/29cf88ce-f053-4197-af9f-8540af4c31f8" />
 
-8. 如果多次运行docker，但因为IO问题卡死，control C退出后docker不会退出，导致后台一直挂起占用资源
+8. 如果多次运行docker，但因为IO问题卡死，control C退出后docker不会退出，导致后台一直挂起占用资源，需要手动关掉。
    ```
    (base) ➜  test_GUIDE docker ps -a
    CONTAINER ID   IMAGE                     COMMAND                  CREATED         STATUS         PORTS     NAMES
@@ -274,26 +274,28 @@
 
 ### File Path
 .
-├── omics
-│   ├── gene.csv
-│   ├── methyl.csv
-│   └── protein.csv
-└── wsi
+├── omics/
+│   ├── gene.csv
+│   ├── methyl.csv
+│   └── protein.csv
+└── wsi/
     └── CGGA_P87.svs
+
 ### 运行结果
 #### only omics
 ##### 运行时间约5分钟以内，memory峰值不高，cpu峰值～1000%
 ##### result
-[Uploading guide_results_simple,P_IDHm_IME,used_omics,IME_positive
-CGGA_2103,0.3797247412158661,"gene,methylation,protein",False
-CGGA_P109,0.44775566332631217,"gene,protein",False
-CGGA_P137,0.2461266163551281,gene,False
-CGGA_P151,0.40986750274123335,gene,False
-CGGA_P153,0.5767333226224423,gene,True
-CGGA_P83,0.21392474465012454,protein,False
-CGGA_P84,0.24578361694146358,"methylation,protein",False
-CGGA_P87,0.3253561172269238,"methylation,protein",False
-.csv…]()
+| Sample ID | IME Score | Used Omics                 | IME Positive |
+| --------- | --------- | -------------------------- | ------------ |
+| CGGA_2103 | 0.3797    | gene, methylation, protein | False        |
+| CGGA_P109 | 0.4478    | gene, protein              | False        |
+| CGGA_P137 | 0.2461    | gene                       | False        |
+| CGGA_P151 | 0.4099    | gene                       | False        |
+| CGGA_P153 | 0.5767    | gene                       | True       |
+| CGGA_P83  | 0.2139    | protein                    | False        |
+| CGGA_P84  | 0.2458    | methylation, protein       | False        |
+| CGGA_P87  | 0.3254    | methylation, protein       | False        |
+
 
 #### 一张片子(~1G)+omics
 ##### 运行时间约40分钟，memory峰值～32G，cpu峰值～1000%
@@ -305,16 +307,17 @@ docker run --shm-size=24g --memory=45g \
   /home/guide/data simple 1
 ```
 ##### result
-[Uploading,P_IDHm_IME,used_omics,IME_positive
-CGGA_2103,0.3797247412158661,"gene,methylation,protein",False
-CGGA_P109,0.44775566332631217,"gene,protein",False
-CGGA_P137,0.2461266163551281,gene,False
-CGGA_P151,0.40986750274123335,gene,False
-CGGA_P153,0.5767333226224423,gene,True
-CGGA_P83,0.21392474465012454,protein,False
-CGGA_P84,0.24578361694146358,"methylation,protein",False
-CGGA_P87,0.37704691066569684,"image,methylation,protein",False
- guide_results_simple.csv…]()
+| Sample ID | IME Score | Used Omics                  | IME Positive |
+| --------- | --------- | --------------------------- | ------------ |
+| CGGA_2103 | 0.3797    | gene, methylation, protein  | False        |
+| CGGA_P109 | 0.4478    | gene, protein               | False        |
+| CGGA_P137 | 0.2461    | gene                        | False        |
+| CGGA_P151 | 0.4099    | gene                        | False        |
+| CGGA_P153 | 0.5767    | gene                        | True       |
+| CGGA_P83  | 0.2139    | protein                     | False        |
+| CGGA_P84  | 0.2458    | methylation, protein        | False        |
+| CGGA_P87  | 0.3770    | image, methylation, protein | False        |
+
 #### full report
 ```
 (base) ➜  ~ docker run --shm-size=24g --memory=45g \
