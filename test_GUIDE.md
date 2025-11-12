@@ -2,20 +2,21 @@
 
 ## 遇到的问题/建议
 1. 个人感觉，Docker 的语法比 Python 和 R 更复杂，坑也很多（如环境挂载、路径映射、root 权限问题等）。建议最终发布版本加入python包，方便用户个性化修改使用。  
-2. 在 input data 需要放到固定名字的文件夹下（`omics`），不够灵活，建议修改为可以输入任意文件路径。  
+2. 在 input data 需要放到固定名字的文件夹下（`omics`），个人感觉不够灵活，建议修改为可以输入任意文件路径可能好一些。  
 3. 在 `docker run` 的参数中，用 1 表示 CPU、用 0 表示 GPU，指代不够直观，建议改成直接使用 `cpu` / `gpu`。  
 4. 遇到问题，直接复制教程代码无法运行，建议把参数说明写到代码块外。  
    <img width="416" height="108" alt="image" src="https://github.com/user-attachments/assets/58241e76-64bd-49aa-aa82-185dbb4d7492" />  
 5. 教程中的镜像名与实际下载的不一致。  
    <img width="416" height="66" alt="image" src="https://github.com/user-attachments/assets/5b641489-2ded-448f-bb1c-cc47755200df" />  
-   **解决办法：**
+   解决办法：
    ```bash
    docker run --shm-size 12G \
      -v /Users/ermine/Downloads/test_GUIDE:/home/guide/data \
      wanglabhkust/guide:v0.1 \
      /home/guide/data \
      simple \
-     1 ```
+     1
+   ```
 6. 如果WSI patch 提取的步骤系统内存不够，会报错。
    遇到的error:
    ```bash
