@@ -1,6 +1,6 @@
-[guide_results_simple.csv](https://github.com/user-attachments/files/23491705/guide_results_simple.csv)## GUIDE Test Report – Zhanye Zhang
+## GUIDE Test Report – Zhanye Zhang
 
-## Suggestions
+## 遇到的问题/建议
 1. 个人感觉，Docker 的语法比 Python 和 R 更复杂，坑也很多（如环境挂载、路径映射、root 权限问题等）。建议最终发布版本加入python包，方便用户个性化修改使用。  
 2. 在 input data 需要放到固定名字的文件夹下（`omics`），不够灵活，建议修改为可以输入任意文件路径。  
 3. 在 `docker run` 的参数中，用 1 表示 CPU、用 0 表示 GPU，指代不够直观，建议改成直接使用 `cpu` / `gpu`。  
@@ -270,6 +270,8 @@
 
 ### Supplementary Information
 ### Information of my MacOS desktop
+<img width="560" height="1030" alt="image" src="https://github.com/user-attachments/assets/12276229-2425-4a31-8cc0-cd1ac6c66cbf" />
+
 ### File Path
 .
 ├── omics
@@ -294,8 +296,114 @@ CGGA_P87,0.3253561172269238,"methylation,protein",False
 .csv…]()
 
 #### 一张片子(~1G)+omics
-##### 运行时间约，memory峰值～32G，cpu峰值～1000%
+##### 运行时间约40分钟，memory峰值～32G，cpu峰值～1000%
+##### code
+```bash
+docker run --shm-size=24g --memory=45g \
+  -v /Users/zhanye/Downloads/test_GUIDE:/home/guide/data \
+  wanglabhkust/guide:v0.1 \
+  /home/guide/data simple 1
+```
+##### result
+[Uploading,P_IDHm_IME,used_omics,IME_positive
+CGGA_2103,0.3797247412158661,"gene,methylation,protein",False
+CGGA_P109,0.44775566332631217,"gene,protein",False
+CGGA_P137,0.2461266163551281,gene,False
+CGGA_P151,0.40986750274123335,gene,False
+CGGA_P153,0.5767333226224423,gene,True
+CGGA_P83,0.21392474465012454,protein,False
+CGGA_P84,0.24578361694146358,"methylation,protein",False
+CGGA_P87,0.37704691066569684,"image,methylation,protein",False
+ guide_results_simple.csv…]()
+#### full report
+```
+(base) ➜  ~ docker run --shm-size=24g --memory=45g \
+  -v /Users/zhanye/Downloads/test_GUIDE:/home/guide/data \
+  wanglabhkust/guide:v0.1 \
+  /home/guide/data simple 1
+Data path: /home/guide/data
+Output level: simple
+=== Using Images ===
+=== Device Check ===
+Force CPU mode (FORCE_CPU=1)
+Selected device: cpu
+Running in CPU mode
+WSI files path: /home/guide/data/wsi
+=== Starting Image Preprocessing ===
+Found 1 files
+Number of processes: 1
+Number of training images: 1
+Task #1: Process slide 0
+Opening Slide #0: /home/guide/data/wsi/CGGA_P87.svs
+Saving image to: /home/guide/data/mask/training_png/CGGA_P87.svs-32x-77400x56523-2418x1766.png
+Done converting slide 0
+Time elapsed: 0:00:03.039338
+Applying filters to images (multiprocess)
 
+Number of processes: 1
+Number of training images: 1
+Task #0: Process slide 0
+Processing slide #0
+Done filtering slide 0
+Time to apply filters to all images (multiprocess): 0:00:00.029219
+
+Input path:  /home/guide/data/wsi
+Output path:  /home/guide/data/h5
+Number of processes: 1
+Number of training images: 1
+Task #0: Process slide 0
+  0%|          | 0/1 [00:00<?, ?it/s]Open CGGA_P87... Size  945.9670896530151
+Downsampling with factor  0
+Given magnification 20.0, best level=0, best mag=40.0
+Opening image  2025-11-12 03:56:07.302056
+Finished reading image  2025-11-12 04:04:03.579448
+Downsampling with factor 2
+Finished reading high mag image
+Small mask shape:  (1766, 2418)
+High mag size:  (28416, 38912, 3)
+Level dims:  ((77400, 56523), (19350, 14130), (4837, 3532), (2418, 1766))
+Mask rate:  0.4777990524776743
+Start extracting features  2025-11-12 04:07:28.150910
+Finished extracting features  2025-11-12 04:07:33.277300
+Start staining normalization
+100%|██████████| 7729/7729 [00:35<00:00, 216.82it/s]
+Start saving as .h5 files  2025-11-12 04:08:08.999170
+(7729, 3, 256, 256)
+Done
+100%|██████████| 1/1 [17:55<00:00, 1075.79s/it]
+Done converting slide 0
+Done!
+=== Complete Preprocessing Image ===
+=== Starting Image Prediction ===
+1
+Downloading: "https://download.pytorch.org/models/resnet18-f37072fd.pth" to /root/.cache/torch/hub/checkpoints/resnet18-f37072fd.pth
+100%|██████████| 44.7M/44.7M [00:02<00:00, 22.9MB/s]
+  0%|          | 0/1 [00:00<?, ?it/s][2025-11-12 04:14:29,050] - [main_test_wsi_h5.py file line:55] - INFO: wsi_name: CGGA_P87.h5
+[2025-11-12 04:21:26,500] - [trainer.py file line:27] - INFO: Current path: /home/guide
+[2025-11-12 04:21:27,962] - [trainer.py file line:51] - INFO: # para: 11177538
+[2025-11-12 04:21:27,963] - [trainer.py file line:87] - INFO: load_model_path: GUIDE/pretrained.pth
+cpu
+[2025-11-12 04:21:28,217] - [trainer.py file line:194] - INFO: Epoch 0 evaluation on test...
+[2025-11-12 04:21:28,219] - [trainer.py file line:202] - INFO: Total number of batches: 31
+31it [04:47,  9.28s/it]
+[2025-11-12 04:26:18,628] - [trainer.py file line:220] - INFO: [1943] positive patches out of [7729]
+100%|██████████| 1/1 [11:49<00:00, 709.62s/it]
+=== Complete Image Prediction ===
+=== Starting Multi-Omics Integration ===
+           P_IDHm_IME                 used_omics  IME_positive
+CGGA_2103    0.379725   gene,methylation,protein         False
+CGGA_P109    0.447756               gene,protein         False
+CGGA_P137    0.246127                       gene         False
+CGGA_P151    0.409868                       gene         False
+CGGA_P153    0.576733                       gene          True
+CGGA_P83     0.213925                    protein         False
+CGGA_P84     0.245784        methylation,protein         False
+CGGA_P87     0.377047  image,methylation,protein         False
+
+Results saved to: /home/guide/data/results/guide_results_simple.csv
+=== Complete Multi-Omics Integration ===
+=== Results saved to /home/guide/data/results/guide_results.csv ===
+```
 
 
 
