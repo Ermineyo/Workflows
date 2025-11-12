@@ -4,7 +4,7 @@
 1. 个人感觉，Docker 的语法比 Python 和 R 更复杂，坑也很多（如环境挂载、路径映射、root 权限问题等）。因此我个人建议采用 **在线分析网页 + Python 包** 的形式会更好，既方便使用又易于维护。  
 2. 在 input data 需要放到固定名字的文件夹下（`omics`），不够灵活，建议修改为可以输入任意文件路径。  
 3. 在 `docker run` 的参数中，用 1 表示 CPU、用 0 表示 GPU，指代不够直观，建议改成直接使用 `cpu` / `gpu`。  
-4. 遇到问题时，直接复制教程代码无法运行，建议把参数说明写到代码块外。  
+4. 遇到问题，直接复制教程代码无法运行，建议把参数说明写到代码块外。  
    <img width="416" height="108" alt="image" src="https://github.com/user-attachments/assets/58241e76-64bd-49aa-aa82-185dbb4d7492" />  
 5. 教程中的镜像名与实际下载的不一致。  
    <img width="416" height="66" alt="image" src="https://github.com/user-attachments/assets/5b641489-2ded-448f-bb1c-cc47755200df" />  
@@ -25,7 +25,6 @@
      /home/guide/data \
      simple \
      1
-   WARNING: The requested image's platform (linux/amd64) does not match the detected host platform (linux/arm64/v8) and no specific platform was requested
    Data path: /home/guide/data
    Output level: simple
    === Using Images ===
@@ -254,14 +253,15 @@
    MemoryError
    Error: preprocess_wsi_multi_process.py failed!
    ```
-7. 会卡死在第二个Opening image这一步。在MacOS desktop上，这一步卡了20分钟没有动。
-   ```bash
-   Downsampling with factor  0
-   Given magnification 20.0, best level=0, best mag=40.0
-   Opening image  2025-11-11 14:59:38.144386
-   Downsampling with factor  1
-   Given magnification 20.0, best level=1, best mag=20.0
-   Opening image  2025-11-11 14:59:38.474133
+7. Docker defau
+8. 如果多次运行docker，但因为IO问题卡死，control C退出后docker不会退出，导致后台一直挂起占用资源
+   ```
+   (base) ➜  test_GUIDE docker ps -a
+   CONTAINER ID   IMAGE                     COMMAND                  CREATED         STATUS         PORTS     NAMES
+   d6a56e9a75d0   wanglabhkust/guide:v0.1   "/bin/sh demo_docker…"   2 minutes ago   Up 2 minutes             compassionate_galileo
+   8cc91de877bb   wanglabhkust/guide:v0.1   "/bin/sh demo_docker…"   5 minutes ago   Up 5 minutes             wonderful_gould
+   70c0c47a6d85   wanglabhkust/guide:v0.1   "/bin/sh demo_docker…"   12 hours ago    Up 12 hours              priceless_goldwasser
+   c74de41f5bf6   wanglabhkust/guide:v0.1   "/bin/sh demo_docker…"   12 hours ago    Up 12 hours              keen_hodgkin
    ```
 
 
@@ -274,7 +274,6 @@
 │   ├── methyl.csv
 │   └── protein.csv
 └── wsi
-    ├── CGGA_2103.svs
     └── CGGA_P87.svs
 
 
@@ -286,15 +285,4 @@ Slow step: Opening image  2025-11-11 14:59:38.474133
 PID    COMMAND      %CPU TIME     #TH    #WQ  #PORTS MEM    PURG   CMPRS  PGRP  PPID  STATE    BOOSTS               %CPU_ME %CPU_OTHRS UID  FAULTS     COW       MSGSENT    MSGRECV     SYSBSD      SYSMACH
 0      kernel_task  14.5 84:00:01 260/8  0    0      103M+  0B     0B     0     0     running   0[0]                0.00000 0.00000    0    117597     10660     2147483647 2147483647  0           0
 
-### Information of my MacOS laptop，因为内存不够无法正常运行
-| 项目 | 内容 |
-|------|------|
-| **DOCKER 版本** | 24.0.6 |
-| **系统架构** | aarch64（Apple M1芯片） |
-| **内核版本** | 6.4.16-linuxkit（Docker Desktop 的轻量虚拟机环境） |
-| **虚拟机操作系统** | Docker Desktop (LinuxKit) |
-| **可用 CPU 数** | 8 核 |
-| **可用内存** | 7.66 GiB（Docker Desktop 虚拟机分配） |
-| **存储驱动** | overlay2 |
-| **镜像数量** | 2 |
-| **守护进程状态** | 正常运行 |
+
